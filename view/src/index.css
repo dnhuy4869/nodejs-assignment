@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-color: #e14eca;
+    --background-color: #1E1E2D;
+    --child-background-color: #27293D;
+}
+
+@layer components {
+    .sidebar-active {
+        @apply border-[color:var(--primary-color)] text-[color:var(--primary-color)];
+    }
+
+    .sidebar-inactive {
+        @apply border-gray-300 text-gray-300 hover:border-gray-100 hover:text-gray-100;
+    }
+}
