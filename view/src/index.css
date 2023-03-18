@@ -25,3 +25,19 @@
         @apply border-gray-300 text-gray-300 hover:border-gray-100 hover:text-gray-100;
     }
 }
+
+.btn-primary {
+    border: none;
+    position: relative;
+    overflow: hidden;
+    margin: 4px 1px;
+    border-radius: .4285rem;
+    background: #e14eca;
+    background-image: linear-gradient(to bottom left,#e14eca,#ba54f5,#e14eca);
+    background-size: 210% 210%;
+    background-position: 100% 0;
+    background-color: #e14eca;
+    transition: all .15s ease;
+    box-shadow: none;
+    color: #fff;
+}

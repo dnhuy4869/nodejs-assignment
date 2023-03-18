@@ -5,6 +5,7 @@ const Sidebar = () => {
         "PC Games",
         "Mobile Games",
         "PS4 Games",
+        "PS5 Games",
     ];
 
     const [activeIndex, setActiveIndex] = useState(0);
