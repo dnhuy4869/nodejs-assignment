@@ -17,7 +17,7 @@ const Topbar = () => {
                         <p className="text-gray-300">My</p>
                         <p className="text-blue-500">Shop</p>
                     </div>
-                    <input className="ml-4" placeholder="Search for games" />
+                    <input className="ml-4 px-2.5 py-3 form-input text-base w-96" placeholder="Search for games" />
                 </div>
 
                 <nav className="flex items-center gap-1">
