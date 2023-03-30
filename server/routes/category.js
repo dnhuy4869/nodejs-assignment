@@ -8,4 +8,6 @@ router.post("/create-one", categoryController.createOne);
 
 router.put("/update-one/:id", categoryController.updateOne);
 
+router.delete("/delete-one/:id", categoryController.deleteOne);
+
 module.exports = router;

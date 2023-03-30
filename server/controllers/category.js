@@ -61,8 +61,32 @@ const updateOne = async (req, res) => {
     }
 }
 
+const deleteOne = async (req, res) => {
+    try {
+        const cate = await Category.findById(req.params.id);
+        if (!cate) {
+            return res.status(403).json({
+                message: "Category is not exist",
+            })
+        }
+
+        await cate.deleteOne();
+
+        return res.status(200).json({
+            message: "Deleted successfully",
+        });
+    }
+    catch (err) {
+        return res.status(500).json({
+            message: "Internal server error",
+            error: err,
+        })
+    }
+}
+
 module.exports = {
     getAll,
     createOne,
     updateOne,
+    deleteOne,
 }
