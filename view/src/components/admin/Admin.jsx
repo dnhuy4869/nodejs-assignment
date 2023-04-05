@@ -64,8 +64,8 @@ const Admin = () => {
                     </div>
                     <div className="mt-4 pt-5 px-8">
                         <Routes>
-                            <Route path='/categories' element={<Categories />} />
-                            <Route path='/products' element={<Products />} />
+                            <Route path='/categories/*' element={<Categories />} />
+                            <Route path='/products/*' element={<Products />} />
                         </Routes>
                     </div>
                 </div>
