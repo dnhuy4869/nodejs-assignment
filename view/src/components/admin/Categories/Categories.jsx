@@ -1,102 +1,137 @@
-import React from "react";
-import { usePagination, useTable } from "react-table";
+import axios from "axios";
+import React, { useEffect, useMemo, useState } from "react";
+import { useFlexLayout, useGlobalFilter, usePagination, useTable } from "react-table";
 
 const Categories = () => {
-    const rows = React.useMemo(
-        () => [
-            {
-                col1: 'Hello',
-                col2: 'World',
-            },
-            {
-                col1: 'react-table',
-                col2: 'rocks',
-            },
-            {
-                col1: 'whatever',
-                col2: 'you want',
-            },
-        ],
-        []
-    )
+    const [allCategories, setAllCategories] = useState([]);
 
-    const columns = React.useMemo(
-        () => [
-            {
-                Header: 'Column 1',
-                accessor: 'col1', // accessor is the "key" in the data
-            },
-            {
-                Header: 'Column 2',
-                accessor: 'col2',
-            },
-        ],
-        []
-    )
+    useEffect(() => {
+        try {
+            async function fetchData() {
+                const res = await axios.get("http://127.0.0.1:8000/category/get-all");
+                //console.log(res.data);
 
-    const tableInstance = useTable({ columns, rows }, usePagination);
+                const newData = res.data.map((cate, index) => {
+                    return {
+                        ...cate,
+                        actions: (
+                            <div className="flex items-center gap-4">
+                                <a href="#" className="font-medium text-blue-600 text-blue-500 hover:underline">Edit</a>
+                                <a href="#" className="font-medium text-red-600 text-red-500 hover:underline">Remove</a>
+                            </div>
+                        )
+                    }
+                })
+
+                setAllCategories(newData);
+            }
+
+            fetchData();
+        }
+        catch (err) {
+            console.log(err);
+        }
+    }, []);
+
+    const columns = useMemo(() => [
+        {
+            Header: "Name",
+            accessor: "name",
+        },
+        {
+            Header: "Actions",
+            accessor: "actions",
+            width: 18,
+            disableSortBy: true,
+            disableFilters: true,
+        }
+    ], []);
+
+    const data = useMemo(() => allCategories, [allCategories]);
+
+    const tableInstance = useTable({ columns, data },
+        useFlexLayout,
+        useGlobalFilter,
+        usePagination);
 
     const {
         getTableProps,
         getTableBodyProps,
         headerGroups,
+        rows,
+        state,
         prepareRow,
-        page,
-        canPreviousPage,
-        canNextPage,
-        pageOptions,
-        pageCount,
-        gotoPage,
+        setGlobalFilter,
         nextPage,
         previousPage,
+        canNextPage,
+        canPreviousPage,
+        pageOptions,
+        gotoPage,
+        pageCount,
         setPageSize,
-        setHiddenColumns,
-        state: { pageIndex, pageSize },
     } = tableInstance;
+
+    const { globalFilter, pageIndex, pageSize } = state;
 
     return (
         <>
-            <table {...getTableProps()}>
-                <thead>
-                    {// Loop over the header rows
+            <div className="mb-4">
+                <input className="px-2.5 py-2 form-input text-base w-96" placeholder="Search for items"
+                    value={globalFilter || ""}
+                    onChange={e => setGlobalFilter(e.target.value)} />
+            </div>
+
+            <table {...getTableProps()}
+                className="w-full text-sm text-left text-slate-400">
+                <thead className="text-xs uppercase bg-gray-700">
+                    {
                         headerGroups.map(headerGroup => (
-                            // Apply the header row props
                             <tr {...headerGroup.getHeaderGroupProps()}>
-                                {// Loop over the headers in each row
+                                {
                                     headerGroup.headers.map(column => (
-                                        // Apply the header cell props
-                                        <th {...column.getHeaderProps()}>
-                                            {// Render the header
-                                                column.render('Header')}
+                                        <th {...column.getHeaderProps()}
+                                            className="px-6 py-3">
+                                            {column.render("Header")}
                                         </th>
-                                    ))}
+                                    ))
+                                }
                             </tr>
-                        ))}
+                        ))
+                    }
                 </thead>
-                {/* Apply the table body props */}
                 <tbody {...getTableBodyProps()}>
-                    {// Loop over the table rows
+                    {
                         rows.map(row => {
-                            // Prepare the row for display
-                            prepareRow(row)
+                            prepareRow(row);
                             return (
-                                // Apply the row props
-                                <tr {...row.getRowProps()}>
-                                    {// Loop over the rows cells
-                                        row.cells.map(cell => {
-                                            // Apply the cell props
-                                            return (
-                                                <td {...cell.getCellProps()}>
-                                                    {// Render the cell contents
-                                                        cell.render('Cell')}
-                                                </td>
-                                            )
-                                        })}
+                                <tr {...row.getRowProps()}
+                                    className="bg-[color:var(--child-background-color)] border-b border-gray-700 hover:bg-[#25273A]">
+                                    {
+                                        row.cells.map(cell => (
+                                            <td {...cell.getCellProps()}
+                                                className="px-6 py-4">
+                                                {cell.render("Cell")}
+                                            </td>
+                                        ))
+                                    }
                                 </tr>
                             )
-                        })}
+                        })
+                    }
                 </tbody>
             </table>
+            <div className="mt-4 flex items-center justify-between">
+                <span className="text-sm font-normal text-gray-400">
+                    Showing page <span className="font-semibold text-white"> {pageIndex + 1}</span> of <span className="font-semibold text-white">{pageOptions.length}</span>
+                </span>
+                <div className="">
+                    <button className="px-3 py-2 leading-tight border bg-gray-800 border-gray-700 text-gray-400 hover:bg-gray-700 hover:text-white hover:cursor-pointer"
+                        onClick={() => previousPage()} disabled={!canPreviousPage}>{"<<"}</button>
+                    <button className="px-3 py-2 leading-tight border bg-gray-800 border-gray-700 text-gray-400 hover:bg-gray-700 hover:text-white hover:cursor-pointer"
+                        onClick={() => nextPage()} disabled={!canNextPage}>{">>"}</button>
+                </div>
+            </div>
         </>
     )
 }
