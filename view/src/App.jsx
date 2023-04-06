@@ -9,7 +9,8 @@ const App = () => {
     return (
         <>
             <div className="
-                    h-screen
+                   min-h-screen
+                   h-full
                     border-t-2
                     text-white
                     border-[color:var(--primary-color)]

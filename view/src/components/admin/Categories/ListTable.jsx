@@ -17,8 +17,14 @@ const ListTable = () => {
                         ...cate,
                         actions: (
                             <div className="flex items-center gap-4">
-                                <a href="#" className="font-medium text-blue-600 text-blue-500 hover:underline">Edit</a>
-                                <a href="#" className="font-medium text-red-600 text-red-500 hover:underline">Remove</a>
+                                <Link to={`/admin/categories/edit-form/${cate._id}`}
+                                    className="font-medium text-blue-600 text-blue-500 hover:underline">
+                                    Edit
+                                </Link>
+                                <p to="/admin/categories/edit-form"
+                                    className="font-medium text-red-600 text-red-500 hover:underline hover:cursor-pointer">
+                                    Remove
+                                </p>
                             </div>
                         )
                     }
@@ -50,7 +56,13 @@ const ListTable = () => {
 
     const data = useMemo(() => allCategories, [allCategories]);
 
-    const tableInstance = useTable({ columns, data },
+    const tableInstance = useTable({
+        columns,
+        data,
+        initialState: {
+            pageSize: 5
+        }
+    },
         useFlexLayout,
         useGlobalFilter,
         usePagination);
@@ -68,6 +80,7 @@ const ListTable = () => {
         canNextPage,
         canPreviousPage,
         pageOptions,
+        page,
         gotoPage,
         pageCount,
         setPageSize,
@@ -81,9 +94,9 @@ const ListTable = () => {
                 <input className="px-2.5 py-2 form-input text-base w-96" placeholder="Search for items"
                     value={globalFilter || ""}
                     onChange={e => setGlobalFilter(e.target.value)} />
-                    <Link to="/admin/categories/add-form" >
-                        <button className="btn-primary px-6 py-2 font-bold">Add new</button>
-                    </Link>
+                <Link to="/admin/categories/add-form" >
+                    <button className="btn-primary px-6 py-2 font-bold">Add new</button>
+                </Link>
             </div>
 
             <table {...getTableProps()}
@@ -106,7 +119,7 @@ const ListTable = () => {
                 </thead>
                 <tbody {...getTableBodyProps()}>
                     {
-                        rows.map(row => {
+                        page.map(row => {
                             prepareRow(row);
                             return (
                                 <tr {...row.getRowProps()}

@@ -84,9 +84,29 @@ const deleteOne = async (req, res) => {
     }
 }
 
+const getOneById = async (req, res) => {
+    try {
+        const cate = await Category.findById(req.params.id);
+        if (!cate) {
+            return res.status(403).json({
+                message: "Category is not exist",
+            })
+        }
+
+        return res.status(200).json(cate);
+    }
+    catch (err) {
+        return res.status(500).json({
+            message: "Internal server error",
+            error: err,
+        })
+    }
+}
+
 module.exports = {
     getAll,
     createOne,
     updateOne,
     deleteOne,
+    getOneById,
 }

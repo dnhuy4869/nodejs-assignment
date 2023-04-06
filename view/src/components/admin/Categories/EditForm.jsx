@@ -1,17 +1,54 @@
 import axios from "axios";
 import { useFormik } from "formik";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import * as Yup from "yup";
 
-const AddForm = () => {
+const EditForm = () => {
+    const { id } = useParams();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!id) {
+            navigate("/admin/categories", { replace: true });
+        }
+    }, [])
+
+    const getCategoryById = async (id) => {
+        try {
+            const res = await axios.get(`http://127.0.0.1:8000/category/get-one/${id}`);
+            console.log(res.data);
+            return res.data;
+        }
+        catch (err) {
+            return null;
+        }
+    }
+
+    const [currCate, setCurrcate] = useState({
+        name: "",
+    });
+
+    useEffect(() => {
+        (async () => {
+            const cate = await getCategoryById(id);
+            if (!cate) {
+                navigate("/admin/categories", { replace: true });
+            }
+
+            setCurrcate(cate);
+        })()
+    }, [])
+
     const [message, setMessage] = useState({
         isSuccess: false,
         message: ""
     });
 
     const formik = useFormik({
+        enableReinitialize: true,
         initialValues: {
-            name: "",
+            name: currCate.name,
         },
         validationSchema: Yup.object({
             name: Yup.string()
@@ -25,7 +62,7 @@ const AddForm = () => {
             }
 
             try {
-                const res = await axios.post(`http://127.0.0.1:8000/category/create-one`,
+                const res = await axios.put(`http://127.0.0.1:8000/category/update-one/${id}`,
                     data
                 );
 
@@ -54,7 +91,7 @@ const AddForm = () => {
     return (
         <>
             <div className="bg-[color:var(--child-background-color)] p-5 text-slate-300">
-                <h5 className="font-bold text-lg">Add form</h5>
+                <h5 className="font-bold text-lg">Edit form</h5>
                 <form action="" onSubmit={formik.handleSubmit}>
                     <div className="grid grid-cols-3 my-4 gap-4">
                         <div className="flex flex-col">
@@ -87,4 +124,4 @@ const AddForm = () => {
     )
 }
 
-export default AddForm;
+export default EditForm;

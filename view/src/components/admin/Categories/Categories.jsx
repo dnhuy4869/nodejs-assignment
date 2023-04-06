@@ -4,6 +4,7 @@ import { useFlexLayout, useGlobalFilter, usePagination, useTable } from "react-t
 import ListTable from "./ListTable";
 import AddForm from "./AddForm";
 import { Route, Routes } from "react-router-dom";
+import EditForm from "./EditForm";
 
 const Categories = () => {
 
@@ -12,6 +13,7 @@ const Categories = () => {
             <Routes>
                 <Route exact path='/' element={<ListTable />} />
                 <Route path='/add-form' element={<AddForm />} />
+                <Route path='/edit-form/:id' element={<EditForm />} />
             </Routes>
         </>
     )

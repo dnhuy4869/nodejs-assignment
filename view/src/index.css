@@ -26,6 +26,14 @@
     }
 }
 
+.text-danger {
+    color: #fd5d93;
+}
+
+.text-success {
+    color: #00f2c3;
+}
+
 .btn-primary {
     border: none;
     position: relative;
