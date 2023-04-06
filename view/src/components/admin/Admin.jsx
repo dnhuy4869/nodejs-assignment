@@ -58,11 +58,11 @@ const Admin = () => {
                     </div>
                 </aside>
                 <div className="ml-64">
-                    <div className="flex items-center justify-between pt-4 px-8">
+                    <div className="flex items-center justify-between pt-4 px-2">
                         <span></span>
                         <img className="w-9 h-9 rounded-full" src="/anime3.png" alt="Rounded avatar" />
                     </div>
-                    <div className="mt-4 pt-5 px-8">
+                    <div className="mt-4 pt-5 pl-8">
                         <Routes>
                             <Route path='/categories/*' element={<Categories />} />
                             <Route path='/products/*' element={<Products />} />

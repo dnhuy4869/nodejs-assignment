@@ -6,6 +6,19 @@ import { useFlexLayout, useGlobalFilter, usePagination, useTable } from "react-t
 const ListTable = () => {
     const [allCategories, setAllCategories] = useState([]);
 
+    const deleteProduct = async (id) => {
+        try {
+            const res = await axios.delete(`http://127.0.0.1:8000/category/delete-one/${id}`);
+
+            setAllCategories((prevKeys) => {
+                return prevKeys.filter((key) => key._id !== id);
+            });
+        }
+        catch (err) {
+           console.log(err);
+        }
+    }
+
     useEffect(() => {
         try {
             async function fetchData() {
@@ -22,7 +35,8 @@ const ListTable = () => {
                                     Edit
                                 </Link>
                                 <p to="/admin/categories/edit-form"
-                                    className="font-medium text-red-600 text-red-500 hover:underline hover:cursor-pointer">
+                                    className="font-medium text-red-600 text-red-500 hover:underline hover:cursor-pointer"
+                                    onClick={() => deleteProduct(cate._id)}>
                                     Remove
                                 </p>
                             </div>

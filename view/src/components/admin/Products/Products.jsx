@@ -1,9 +1,13 @@
 import React from "react";
+import { Route, Routes } from "react-router-dom";
+import ListTable from "./ListTable";
 
 const Products = () => {
     return (
         <>
-            Products
+            <Routes>
+                <Route exact path='/' element={<ListTable />} />
+            </Routes>
         </>
     )
 }
