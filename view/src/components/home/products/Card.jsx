@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Card = ({ name, price }) => {
+const Card = ({ product }) => {
     return (
         <>
             <div className="
@@ -11,11 +11,11 @@ const Card = ({ name, price }) => {
                 shadow 
                 hover:cursor-pointer"
             >
-                <img src="/league-of-legends.jpg" className='w-full'/>
-                <p className='text-white text-base px-2 py-3'>{name}</p>
+                <img src={`http://127.0.0.1:8000/public/images/${product.image}`} className='w-full'/>
+                <p className='text-white text-base px-2 py-3'>{product.name}</p>
                 <div className="flex items-center justify-between px-2 py-2">
                     <button className='btn-primary px-6 py-2 font-bold'>Purchase</button>
-                    <p className='pr-4 font-bold text-base text-green-400'>${price}</p>
+                    <p className='pr-4 font-bold text-base text-green-400'>${product.price}</p>
                 </div>
             </div>
         </>

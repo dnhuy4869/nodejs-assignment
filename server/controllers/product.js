@@ -210,6 +210,27 @@ const editOne = async (req, res) => {
     }
 }
 
+const getByCategoryId = async (req, res) => {
+    try {
+        const cate = await Category.findById(req.params.id);
+        if (!cate) {
+            return res.status(403).json({
+                message: "Category is not exist",
+            })
+        }
+
+        const products = await Product.find({ idCategory: req.params.id});
+
+        return res.status(200).json(products);
+    }
+    catch (err) {
+        return res.status(500).json({
+            message: "Internal server error",
+            error: err,
+        })
+    }
+}
+
 module.exports = {
     getAll,
     createOne,
@@ -218,4 +239,5 @@ module.exports = {
     addNew,
     getOneById,
     editOne,
+    getByCategoryId,
 }

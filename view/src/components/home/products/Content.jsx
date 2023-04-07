@@ -2,20 +2,19 @@ import React from "react";
 import Card from "./Card";
 import Sidebar from "./Sidebar";
 
-const Content = () => {
+const Content = ({ products, setProducts, setAllProducts }) => {
     return (
         <>
             <div className='px-12 mt-10'>
-                <Sidebar />
+                <Sidebar setProducts={setProducts} setAllProducts={setAllProducts} />
                 <div className="pl-72 grid grid-cols-4 gap-y-6">
-                    <Card name={"League of Legends"} price={34} />
-                    <Card name={"League of Legends"} price={34} />
-                    <Card name={"League of Legends"} price={34} />
-                    <Card name={"League of Legends"} price={34} />
-                    <Card name={"League of Legends"} price={34} />
-                    <Card name={"League of Legends"} price={34} />
-                    <Card name={"League of Legends"} price={34} />
-                    <Card name={"League of Legends"} price={34} />
+                    {
+                        products.map((product, index) => {
+                            return (
+                                <Card product={product} />
+                            )
+                        })
+                    }
                 </div>
             </div>
         </>

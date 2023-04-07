@@ -64,9 +64,13 @@ const ListTable = () => {
             accessor: "password",
         },
         {
+            Header: "Role",
+            accessor: "role",
+        },
+        {
             Header: "Actions",
             accessor: "actions",
-            width: 42,
+            width: 66,
             disableSortBy: true,
             disableFilters: true,
         }
