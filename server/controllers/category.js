@@ -1,4 +1,5 @@
-const Category = require("../models/category")
+const Category = require("../models/category");
+const Product = require("../models/product");
 
 const getAll = async (req, res) => {
     try {
@@ -71,6 +72,8 @@ const deleteOne = async (req, res) => {
         }
 
         await cate.deleteOne();
+
+        await Product.deleteMany({ idCategory: cate._id });
 
         return res.status(200).json({
             message: "Deleted successfully",

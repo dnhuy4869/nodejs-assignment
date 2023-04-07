@@ -17,7 +17,7 @@ const EditForm = () => {
     const getCategoryById = async (id) => {
         try {
             const res = await axios.get(`http://127.0.0.1:8000/category/get-one/${id}`);
-            console.log(res.data);
+            //console.log(res.data);
             return res.data;
         }
         catch (err) {
