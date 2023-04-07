@@ -3,6 +3,7 @@ import Login from "../Login";
 import { BrowserRouter, Link, Route, Routes, useNavigate } from "react-router-dom";
 import Categories from "./Categories/Categories";
 import Products from "./Products/Products";
+import Users from "./Users/Users";
 
 const Admin = () => {
     const tabs = [
@@ -13,6 +14,10 @@ const Admin = () => {
         {
             name: "Products",
             path: "/admin/products",
+        },
+        {
+            name: "Users",
+            path: "/admin/users",
         },
     ];
 
@@ -66,6 +71,7 @@ const Admin = () => {
                         <Routes>
                             <Route path='/categories/*' element={<Categories />} />
                             <Route path='/products/*' element={<Products />} />
+                            <Route path='/users/*' element={<Users />} />
                         </Routes>
                     </div>
                 </div>
