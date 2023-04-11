@@ -34,8 +34,8 @@ const Topbar = ({ allProduct, products, setProducts }) => {
                 <div className="flex items-center">
                     <div className="w-64 flex gap-1 uppercase font-semibold text-3xl hover:cursor-pointer"
                         onClick={() => { goToHome() }}>
-                        <p className="text-gray-300">My</p>
-                        <p className="text-blue-500">Shop</p>
+                        <p className="text-gray-300">Steam</p>
+                        <p className="text-blue-500">Fake</p>
                     </div>
                     <input className="ml-4 px-2.5 py-3 form-input text-base w-96" placeholder="Search for games"
                         onChange={e => searchProducts(e)} />
