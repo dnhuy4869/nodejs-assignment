@@ -15,6 +15,11 @@ const Sidebar = ({setProducts, setAllProducts}) => {
                 const res = await axios.get("http://127.0.0.1:8000/category/get-all");
 
                 setCategories(res.data);
+
+                const products = await axios.get(`http://127.0.0.1:8000/product/get-by-category/${res.data[0]._id}`);
+
+                setAllProducts(products.data);
+                setProducts(products.data);
             }
 
             fetchData();

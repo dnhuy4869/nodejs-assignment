@@ -5,7 +5,7 @@ import Sidebar from "./Sidebar";
 const Content = ({ products, setProducts, setAllProducts }) => {
     return (
         <>
-            <div className='px-12 mt-10'>
+            <div className='px-12 mt-28'>
                 <Sidebar setProducts={setProducts} setAllProducts={setAllProducts} />
                 <div className="pl-72 grid grid-cols-4 gap-y-6">
                     {
